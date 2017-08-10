@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name server.edwinksl.com;
+
+    location /slash {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/edwinksl/git/do-slack-slash/myproject.sock;
+    }
+}
