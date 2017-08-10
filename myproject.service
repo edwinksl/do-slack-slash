@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve myproject
+After=network.target
+
+[Service]
+User=edwinksl
+Group=www-data
+WorkingDirectory=/home/edwinksl/git/do-slack-slash
+Environment="PATH=/home/edwinksl/git/do-slack-slash/venv/bin"
+ExecStart=/home/edwinksl/git/do-slack-slash/venv/bin/uwsgi --ini myproject.ini
+
+[Install]
+WantedBy=multi-user.target
