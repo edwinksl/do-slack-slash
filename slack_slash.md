@@ -15,7 +15,7 @@ Before you begin this tutorial, you will need the following:
 
 We will first create a Slack app and install it in a development Slack team. If you do not have a development Slack team, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
 
-![Page for creating new command.](images/create_new_command.png)
+![Page for creating new command.](https://i.imgur.com/78vbP8z.png)
 
 For this tutorial, the Slack slash command that will be used is `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>server_domain_or_IP<^>/slash`. Therefore, we will fill in the following information:
 
@@ -25,7 +25,7 @@ For this tutorial, the Slack slash command that will be used is `/slash`, which 
 
 The filled-in page now looks like:
 
-![Filled-in page for creating new command.](images/create_new_command_filled_in.png)
+![Filled-in page for creating new command.](https://i.imgur.com/5NEcWb1.png)
 
 <$>[note]
 **Note**: Ignore the "This doesn't seem like a proper link. Sorry!" message in the screenshot; you will not see this message as you are using a valid domain name or IP address.
@@ -137,7 +137,7 @@ sudo systemctl restart nginx
 
 Visit your development Slack team and type `/slash` in any channel. You should see the following response:
 
-![](images/success.png)
+![](https://i.imgur.com/TiHgJer.png)
 
 ## Conclusion
 
