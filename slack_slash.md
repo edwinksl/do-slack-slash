@@ -1,156 +1,144 @@
-<!--
-This is an article template you can use as a quick starting point when writing DigitalOcean tutorials. Once you've reviewed the template, delete the comments and begin writing your article. You'll find some examples of our custom Markdown at the very bottom of the template.
-
-As you write, refer to our style and formatting guidelines for more detailed explanations:
-
-- [do.co/style](https://do.co/style)
-
-Use our [Markdown previewer](https://www.digitalocean.com/community/markdown) to review your article's formatting.
-
-Readers should be able to follow your tutorial from the beginning to the end on a DigitalOcean Droplet. Before submitting your article to the editorial team, please be sure to create a new Droplet and test your article from start to finish on it exactly as written. Cut and paste commands from the article into your terminal to make sure there aren't typos in the commands. If you find yourself executing a command that isn't in the article, incorporate it into the article to make sure the reader gets the exact same results. We will test your article and send it back to you if we run into technical problems, which significantly slows down the publication process.
--->
-
-
-# How To [Install/Configure/Do Something] on [Distribution]
-
-<!-- Use Title Case for all Titles -->
-
-<!-- Learn about the title, introduction, and Goals sections at https://do.co/style#title-introduction-and-goals -->
-
-<!-- Learn about formatting headers at https://do.co/style#headers -->
+# How to Set Up Slack Slash Command on Ubuntu 16.04
 
 ### Introduction
 
-<!-- Our articles have a specific structure. Learn more at https://do.co/style/structure -->
-
-Introductory paragraph about the topic that explains what this topic is about and why the reader should care; what problem does it solve?
-
-In this guide, you will [configure/set up/build/deploy] [some thing]...
-
-When you're finished, you'll be able to...
+In this guide, you will to set up a [Slack](https://slack.com/) slash command on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. This slash command can then be invoked from any Slack team in which you install the slash command as part of a Slack app. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
 
 ## Prerequisites
 
-<!-- Prerequisites are important. Learn more at https://do.co/style#prerequisites -->
+Before you begin this tutorial, you will need the following:
 
-Before you begin this guide you'll need the following:
+1. Set up a non-root user with sudo privileges on a Ubuntu 16.04 server: [Initial Server Setup with Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04).
+2. Set up uWSGI and Nginx: [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04).
 
-- [number of servers] <OS and OS Version> server(s) <!-- Also specify the amount of RAM the server needs if relevant. -->
-- A non-root user with sudo privileges (<insert link to Initial Server Setup article for the OS used in this tutorial>) explains how to set this up.)
-- (Optional) If software such as Nginx needs to be installed, link to the proper article describing how to install it.
-- List any other accounts needed, such as Github or other services.
+## Step 1 - Create and Install Slack App
 
-## Step 1 — Doing Something
+We will first create a Slack app and install it in a development Slack team. If you do not have a development Slack team, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
 
-<!-- For more information on steps, see https://do.co/style/#steps -->
+![Page for creating new command.](images/create_new_command.png)
 
-Introduction to the step. What are we going to do and why are we doing it?
+For this tutorial, the Slack slash command that will be used is `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>server_domain_or_IP<^>/slash`. Therefore, we will fill in the following information:
 
-First....
+- **Command**: `/slash`
+- **Request URL**: `http://<^>server_domain_or_IP<^>/slash`
+- **Short Description**: DigitalOcean Slack slash command
 
-Next...
+The filled-in page now looks like:
 
-Finally...
+![Filled-in page for creating new command.](images/create_new_command_filled_in.png)
 
-<!--
-If showing a command, explain the command first by talking about what it does. Then show the command.
+<$>[note]
+**Note**: Ignore the "This doesn't seem like a proper link. Sorry!" message in the screenshot; you will not see this message as you are using a valid domain name or IP address.
+<$>
 
-If showing a configuration file, try to show only the relevant parts and explain what needs to change.
--->
+Click on the green **Save** button to finish creating the slash command. Now, we will install the app by clicking on **Install App**, followed by the green **Install App to Team** button and lastly the green **Authorize** button.
 
-Now transition to the next step by telling the reader what's next.
+## Step 2 — Create Flask App for Slack Slash Command
 
-## Step 2 — Title Case
+After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, your Flask app resides in `~/<^>myproject<^>/` and this directory contains the following files and directory:
+  - `<^>myproject<^>.py`
+  - `wsgi.py`
+  - `<^>myprojectenv<^>/`
 
-Another introduction
+Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be private, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is private and not kept under version control, and then use the `python-dotenv` package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
 
-Your content
-
-Transition to the next step.
-
-## Step 3 — Title Case
-
-Another introduction
-
-Your content
-
-Transition to the next step.
-
-## Conclusion
-
-In this article you [configured/set up/built/deployed] [something]. Now you can....
-
-<!-- Speak  to reader benefits of this technique or procedure and optionally provide places for further exploration. -->
-
-<!-- Some examples of how to mark up various things
-
-This is _italics_ and this is **bold**.
-
-Only use italics and bold for specific things. Learn more at https://do.co/style#bold-and-italics
-
-This is `inline code`. Use it for referencing package names and commands.
-
-Here's a command someone types in the Terminal:
+We first activate the Python virtual environment by running:
 
 ```command
-sudo nano /etc/nginx/sites-available/default
+source <^>myprojectenv<^>/bin/activate
 ```
 
-Here's a configuration file. The label on the first line lets you clearly state the file that's being shown or modified:
+To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Using `pip`, we will install the `python-dotenv` package:
+
+```command
+pip install python-dotenv
+```
+
+Using nano or your favorite text editor, create the `.env` file:
+
+```command
+nano .env
+```
+
+Ensure that the `.env` file contains the following key-value pair:
+
+```
+[label ~/myproject/.env]
+VERIFICATION_TOKEN=<^>your_verification_token<^>
+```
+
+We now open `<^>myproject<^>.py`:
+
+```command
+nano <^>myproject<^>.py
+```
+
+We modify `<^>myproject<^>.py` to respond to a Slack slash command by sending a text message that says "DigitalOcean Slack slash command is successful!":
+
+```python
+[label ~/myproject/myproject.py]
+#!/usr/bin/env python
+
+import dotenv
+import os
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv.load_dotenv(dotenv_path)
+verification_token = os.environ['VERIFICATION_TOKEN']
+
+
+@app.route('/slash', methods=['POST'])
+def slash():
+    if request.form['token'] == verification_token:
+        payload = {'text': 'DigitalOcean Slack slash command is successful!'}
+        return jsonify(payload)
+
+
+if __name__ == '__main__':
+    app.run()
+```
+
+Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
+
+```command
+sudo nano /etc/nginx/sites-available/<^>myproject<^>
+```
+
+Ensure that `location` is changed to `/slash` in `/etc/nginx/sites-available/<^>myproject<^>`:
 
 ```nginx
-[label /etc/nginx/sites-available/default]
+[label /etc/nginx/sites-available/myproject]
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
+    listen 80;
+    server_name <^>server_domain_or_IP<^>;
 
-    root <^>/usr/share/nginx/html<^>;
-    index index.html index.htm;
-
-    server_name localhost;
-
-    location / {
-        try_files $uri $uri/ =404;
+    location /slash {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/<^>sammy<^>/<^>myproject<^>/<^>myproject<^>.sock;
     }
 }
 ```
 
-Here's output from a command:
-
-```
-[secondary_label Output]
-Could not connect to Redis at 127.0.0.1:6379: Connection refused
+After making this change, we check the Nginx configuration file for syntax errors:
+```command
+sudo nginx -t
 ```
 
-Learn about formatting commands and terminal output at https://do.co/style#code
+If there are no syntax errors with the Nginx configuration file, we restart the Nginx service:
 
-Key presses should be written in ALLCAPS with in-line code formatting: `ENTER`.
+```command
+sudo systemctl restart nginx
+```
 
-Use a plus symbol (+) if keys need to be pressed simultaneously: `CTRL+C`.
+## Step 3 — Test Slack Slash Command
 
-This is a <^>variable<^>.
+Visit your development Slack team and type `/slash` in any channel. You should see the following response:
 
-This is an `<^>in-line code variable<^>`
+![](images/success.png)
 
-Learn more about how to use variables to highlight important items at https://do.co/style#variables
+## Conclusion
 
-Use `<^>your_server_ip<^>` when referencing the IP of the server.  Use `111.111.111.111` and `222.222.222.222` if you need other IP addresses in examples.
-
-Learn more about host names and domains at https://do.co/style#users-hostnames-and-domains
-
-<$>[note]
-**Note:** This is a note.
-<$>
-
-<$>[warning]
-**Warning:** This is a warning.
-<$>
-
-Learn more about notes at https://do.co/style#notes-and-warnings
-
-Screenshots should be in PNG format and hosted on imgur. Embed them in the article using the following format:
-
-![Alt text for screen readers](/path/to/img.png)
-
-Learn more about images at https://do.co/style#images-and-other-assets
--->
+In this tutorial, you have implemented a Slack slash command by setting up a Flask app that is served by a uWSGI application server and a Nginx reverse proxy server. To encrypt the connection for the slash command, you should look into using HTTPS for the request URL. You can do so by installing on the Nginx server a SSL certificate issued for free by Let's Encrypt, and an awesome tutorial for this can be found at https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04.
