@@ -137,7 +137,7 @@ sudo systemctl restart nginx
 
 Visit your development Slack team and type `/slash` in any channel. You should see the following response:
 
-![](https://i.imgur.com/TiHgJer.png)
+![Slack slash command is successful!](https://i.imgur.com/TiHgJer.png)
 
 ## Conclusion
 
