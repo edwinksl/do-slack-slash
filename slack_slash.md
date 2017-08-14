@@ -11,7 +11,7 @@ Before you begin this tutorial, you will need the following:
 1. Set up a non-root user with sudo privileges on a Ubuntu 16.04 server: [Initial Server Setup with Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04).
 2. Set up uWSGI and Nginx: [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04).
 
-## Step 1 - Create and Install Slack App
+## Step 1 — Create and Install Slack App
 
 We will first create a Slack app and install it in a development Slack team. If you do not have a development Slack team, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
 
