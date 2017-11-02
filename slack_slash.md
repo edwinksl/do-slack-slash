@@ -133,6 +133,12 @@ After we have modified and saved `<^>myproject<^>.py`, deactivate the Python vir
 deactivate
 ```
 
+Restart the `<^>myproject<^>` systemd service:
+
+```command
+sudo systemctl restart myproject
+```
+
 Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
 
 ```command
