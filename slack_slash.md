@@ -161,6 +161,7 @@ server {
 ```
 
 After making this change, we check the Nginx configuration file for syntax errors:
+
 ```command
 sudo nginx -t
 ```
