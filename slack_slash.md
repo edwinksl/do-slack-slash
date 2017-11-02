@@ -68,6 +68,31 @@ Ensure that the `.env` file contains the following key-value pair:
 VERIFICATION_TOKEN=<^>your_verification_token<^>
 ```
 
+We then open `<^>myproject<^>.ini`:
+
+```command
+nano <^>myproject<^>.ini
+```
+
+We modify `<^>myproject<^>.ini` to ensure that uWSGI automatically reloads when we `touch` or modify our Flask app in `<^>myproject<^>.py`:
+
+```
+[label ~/myproject/myproject.ini]
+[uwsgi]
+module = wsgi:app
+
+master = true
+processes = 5
+
+socket = myproject.sock
+chmod-socket = 660
+vacuum = true
+
+die-on-term = true
+
+touch-reload = <^>myproject<^>.py
+```
+
 We now open `<^>myproject<^>.py`:
 
 ```command
