@@ -101,6 +101,7 @@ def slash():
 if __name__ == '__main__':
     app.run()
 ```
+
 After we have modified and saved `<^>myproject<^>.py`, deactivate the Python virtual environment:
 
 ```command
