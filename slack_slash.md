@@ -100,6 +100,11 @@ def slash():
 if __name__ == '__main__':
     app.run()
 ```
+After we have modified and saved `<^>myproject<^>.py`, deactivate the Python virtual environment:
+
+```command
+deactivate
+```
 
 Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
 
