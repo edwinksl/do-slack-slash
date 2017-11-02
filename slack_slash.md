@@ -13,7 +13,7 @@ Before you begin this tutorial, you will need the following:
 
 ## Step 1 — Create and Install Slack App
 
-We will first create a Slack app and install it in a development Slack workspace. If you do not have a development Slack workspace, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
+We will first create a Slack app and install it in a development Slack workspace. If you do not have a development Slack workspace, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps and click on the green **Create New App** button. Under "App Name", we will use "DigitalOcean Slack slash command". Select the appropriate workspace under "Development Slack Workspace" and then click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
 
 ![Page for creating new command.](https://i.imgur.com/78vbP8z.png)
 
