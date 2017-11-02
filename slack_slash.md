@@ -2,7 +2,7 @@
 
 ### Introduction
 
-In this guide, you will to set up a [Slack](https://slack.com/) slash command on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. This slash command can then be invoked from any Slack team in which you install the slash command as part of a Slack app. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
+In this guide, you will to set up a [Slack](https://slack.com/) slash command on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. This slash command can then be invoked from any Slack workspace in which you install the slash command as part of a Slack app. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ Before you begin this tutorial, you will need the following:
 
 ## Step 1 — Create and Install Slack App
 
-We will first create a Slack app and install it in a development Slack team. If you do not have a development Slack team, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
+We will first create a Slack app and install it in a development Slack workspace. If you do not have a development Slack workspace, create one at https://slack.com/create. To create a Slack app, visit https://api.slack.com/apps, click on the green **Create New App** button, fill in the required information, and click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
 
 ![Page for creating new command.](https://i.imgur.com/78vbP8z.png)
 
@@ -31,7 +31,7 @@ The filled-in page now looks like:
 **Note**: Ignore the "This doesn't seem like a proper link. Sorry!" message in the screenshot; you will not see this message as you are using a valid domain name or IP address.
 <$>
 
-Click on the green **Save** button to finish creating the slash command. Now, we will install the app by clicking on **Install App**, followed by the green **Install App to Team** button and lastly the green **Authorize** button.
+Click on the green **Save** button to finish creating the slash command. Now, we will install the app by clicking on **Install App**, followed by the green **Install App to Workspace** button and lastly the green **Authorize** button.
 
 ## Step 2 — Create Flask App for Slack Slash Command
 
@@ -135,7 +135,7 @@ sudo systemctl restart nginx
 
 ## Step 3 — Test Slack Slash Command
 
-Visit your development Slack team and type `/slash` in any channel. You should see the following response:
+Visit your development Slack workspace and type `/slash` in any channel. You should see the following response:
 
 ![Slack slash command is successful!](https://i.imgur.com/TiHgJer.png)
 
