@@ -36,6 +36,7 @@ Click on the green **Save** button to finish creating the slash command. Now, we
 ## Step 2 — Create Flask App for Slack Slash Command
 
 After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, your Flask app resides in `~/<^>myproject<^>/` and this directory contains the following files and directory:
+  - `<^>myproject<^>.ini`
   - `<^>myproject<^>.py`
   - `wsgi.py`
   - `<^>myprojectenv<^>/`
