@@ -14,7 +14,7 @@ To complete this tutorial, you will need:
 
 * One Ubuntu 16.04 server set up by following [the Ubuntu 16.04 initial server setup guide](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04), including a sudo non-root user and a firewall.
 * An existing Flask application served with uWSGI running behind Nginx. Complete the tutorial [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) to configure this on your server.
-* A development Slack workspace. If you don't have one, create one at https://slack.com/create. 
+* A development Slack workspace. If you don't have one, create one at https://slack.com/create.
 
 ## Step 1 — Create and Install Slack App
 
