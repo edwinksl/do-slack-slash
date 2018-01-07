@@ -31,10 +31,10 @@ To create a Slack app, visit https://api.slack.com/apps and click on the green *
 
 ![Page for creating new command.](https://i.imgur.com/78vbP8z.png)
 
-For this tutorial, the Slack slash command that will be used is `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>your_server_ip_or_domain_name<^>/slash`. Therefore, we will fill in the following information:
+For this tutorial, the Slack slash command that will be used is `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>server_domain_or_IP<^>/slash`. Therefore, we will fill in the following information:
 
 - **Command**: `/slash`.
-- **Request URL**: `http://<^>your_server_ip_or_domain_name<^>/slash`.
+- **Request URL**: `http://<^>server_domain_or_IP<^>/slash`.
 - **Short Description**: DigitalOcean Slack slash command.
 
     <!-- TODO:  I don't think the screenshot is necessary. Slack may change the UI and changing text later is easier than screenshots.  -->
@@ -193,7 +193,7 @@ sudo systemctl restart myproject
 ```
 
 <!-- TODO:  this is a fantastic example of telling us what we're doing before we do it. This is what I was looking for in the other spots.  -->
-Because our request URL is `http://<^>your_server_ip_or_domain_name<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
+Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
 
 ```command
 sudo nano /etc/nginx/sites-available/<^>myproject<^>
@@ -205,7 +205,7 @@ Ensure that `location` is changed to `/slash` in `/etc/nginx/sites-available/<^>
 [label /etc/nginx/sites-available/myproject]
 server {
     listen 80;
-    server_name <^>your_server_ip_or_domain_name<^>;
+    server_name <^>server_domain_or_IP<^>;
 
     location <^>/slash<^> {
         include uwsgi_params;
