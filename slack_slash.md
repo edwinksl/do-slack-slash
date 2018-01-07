@@ -103,7 +103,7 @@ VERIFICATION_TOKEN=<^>your_verification_token<^>
 
 <!-- Response: Added purpose of opening the file in the paragraph below. -->
 
-Then open `<^>myproject<^>.ini` in your editor:
+During the development of a Flask app, it is sometimes convenient for the uWSGI server to reload automatically when we make changes to the app. To do this, first open `<^>myproject<^>.ini` in your editor:
 
 ```command
 nano <^>myproject<^>.ini
