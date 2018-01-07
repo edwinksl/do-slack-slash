@@ -228,13 +228,13 @@ sudo systemctl restart nginx
 
 <!-- TODO:  transition. What have we done so far, what's next? -->
 
-## Step 3 — Test the Slack Slash Command
-
 Visit your development Slack workspace and type `/slash` in any channel. You should see the following response:
 
 ![Slack slash command is successful!](https://i.imgur.com/TiHgJer.png)
 
 <!-- TODO:  Is there more we can do in this tutorial to make this more useful? Maybe do something with a value that comes in? Because this step is so short, it could be combined with the previous step, which then makes this only a two-step tutorial.  It would be great if we could expand this just a little more. -->
+
+<!-- Response: I have merged steps 2 and 3. -->
 
 ## Conclusion
 
