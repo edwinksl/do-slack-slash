@@ -100,6 +100,9 @@ VERIFICATION_TOKEN=<^>your_verification_token<^>
 ```
 
 <!-- TODO:  before we open this file, let us know what we're going to do.  -->
+
+<!-- Response: Added purpose of opening the file in the paragraph below. -->
+
 Then open `<^>myproject<^>.ini` in your editor:
 
 ```command
