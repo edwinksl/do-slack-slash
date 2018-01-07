@@ -71,7 +71,7 @@ After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubu
   - `wsgi.py`
   - `<^>myprojectenv<^>/`
 
-Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be private, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is private and not kept under version control, and then use the `python-dotenv` package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
+Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be private, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is private and not kept under version control, and then use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
 
 First, activate the Python virtual environment by running:
 
@@ -79,10 +79,10 @@ First, activate the Python virtual environment by running:
 source <^>myprojectenv<^>/bin/activate
 ```
 
-To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Secrets such as the verification token should not be stored under version control. To achieve this, we use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package that exports the secrets as environment variables. Using `pip`, we install the `python-dotenv` package:
+To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Secrets such as the verification token should not be stored under version control. To achieve this, we use the `python-dotenv` package that exports the secrets as environment variables. Using `pip`, we install the `python-dotenv` package:
 <!-- TODO:  explain why we need this package. What will it do for us?  Also, link to its docs. -->
 
-<!-- Response: Edited paragraph above to discuss what the package does and link to package documentation. -->
+<!-- Response: Edited paragraph above to discuss what the package does. Also linked to package documentation two paragraphs above. -->
 
 ```command
 pip install python-dotenv
