@@ -3,6 +3,8 @@
 ### Introduction
 <!-- TODO:  Can you give an introduction to slash commands here? What are they and why would we want to build one? What kinds of things are they used for? Get us excited about this before we dive into the project. -->
 
+In Slack, slash commands are a quick and easy way to perform actions in the message input box. For example, typing `/who` lists all the users in the current channel. A complete list of default slash commands can be found at https://get.slack.help/hc/en-us/articles/201259356-Slash-commands. In this tutorial, you will learn to add your own custom slash command to carry out actions that members of your Slack workspace find useful.
+
 <!-- TODO:  can you give an overview of how this all works at a high level? You type `/slash` into Slack. The request goes from Slack to your server, where your Flask application processes the request and returns a response to Slack" or something? -->
 
 In this guide, you will set up a [Slack](https://slack.com/) slash command on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. This slash command can then be invoked from any Slack workspace in which you install the slash command as part of a Slack app. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
