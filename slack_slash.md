@@ -3,7 +3,7 @@
 ### Introduction
 <!-- TODO:  Can you give an introduction to slash commands here? What are they and why would we want to build one? What kinds of things are they used for? Get us excited about this before we dive into the project. -->
 
-<!-- Response: Added a quick introduction to slash commands. -->
+<!-- Response: Added a quick introduction to slash commands below. -->
 
 In [Slack](https://slack.com/), slash commands are a quick and easy way to perform actions in the message input box. For example, typing `/who` lists all users in the current channel. A complete list of built-in slash commands can be found at https://get.slack.help/hc/en-us/articles/201259356-Slash-commands. You will likely find that you need to add custom slash commands that members of your Slack workspace find useful, which is what we will cover in this tutorial.
 
@@ -53,7 +53,7 @@ Click on the green **Save** button to finish creating the slash command. Then in
 
 <!-- TODO:  Add a transition here. What are we going to do next? -->
 
-<!-- Response: Added a transition paragraph. -->
+<!-- Response: Added a transition paragraph below. -->
 
 We have now created and installed a Slack app in the development Slack workspace. Next, we will create a Flask app that processes the slash command.
 
