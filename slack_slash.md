@@ -49,6 +49,10 @@ Click on the green **Save** button to finish creating the slash command. Then in
 
 <!-- TODO:  Add a transition here. What are we going to do next? -->
 
+<!-- Response: Added a transition paragraph. -->
+
+We have now created and installed a Slack app in the development Slack workspace. Next, we will create a Flask app that processes the slash command.
+
 ## Step 2 — Create Flask App for Slack Slash Command
 
 <!-- TODO:  Introduce this step. What are we doing? "When we issue commands in our Slack workspace, they'll be sent to our server. Let's write the code that handles those requests by using the Flask application you created in the ....."  -->
