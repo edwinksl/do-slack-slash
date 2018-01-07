@@ -246,4 +246,4 @@ In this tutorial, you implemented a Slack slash command by setting up a Flask ap
 
 <!-- TODO:  what else can we do with this setup? Give us more examples and ideas for further exploration. -->
 
-<!-- Response: I have added a sentence about some general ideas for what one can do with slash commands. -->
+<!-- Response: I have added a sentence above about some general ideas for what one can do with slash commands. -->
