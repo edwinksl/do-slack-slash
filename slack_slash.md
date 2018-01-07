@@ -135,7 +135,10 @@ touch-reload = <^>myproject<^>.py
 ```
 
 <!-- TODO:  same here. What are we about to do? -->
-We now open `<^>myproject<^>.py`:
+
+<!-- Response: Mention the purpose of this step in the paragraph below. -->
+
+We now create the Flask app that receives and processes the information sent by the slash command and returns an appropriate response to Slack. We first open `<^>myproject<^>.py`:
 
 ```command
 nano <^>myproject<^>.py
