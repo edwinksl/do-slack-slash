@@ -109,7 +109,7 @@ During the development of a Flask app, it is sometimes convenient for the uWSGI 
 nano <^>myproject<^>.ini
 ```
 
-During the development of a Flask app, it is sometimes convenient for the uWSGI server to reload automatically when we make changes to the app. Therefore, we modify `<^>myproject<^>.ini` to ensure that uWSGI automatically reloads when you `touch` or modify the Flask app in `<^>myproject<^>.py`: <!-- TODO:  why would we want to do this? Please explain. -->
+Then, we modify `<^>myproject<^>.ini` to ensure that uWSGI automatically reloads when you `touch` or modify the Flask app in `<^>myproject<^>.py`: <!-- TODO:  why would we want to do this? Please explain. -->
 
 <!-- Response: Added justification in the paragraph above. -->
 
