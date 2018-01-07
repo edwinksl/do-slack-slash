@@ -34,6 +34,9 @@ For this tutorial, the Slack slash command that will be used is `/slash`, which 
 - **Short Description**: DigitalOcean Slack slash command.
 
     <!-- TODO:  I don't think the screenshot is necessary. Slack may change the UI and changing text later is easier than screenshots.  -->
+
+    <!-- Response: I feel that the screenshot is useful for people who prefer not to read through a chunk of text to fill out a form. -->
+
 The filled-in page now looks like:
 
 ![Filled-in page for creating new command.](https://i.imgur.com/5NEcWb1.png)
