@@ -184,7 +184,7 @@ deactivate
 
 <!-- TODO:  why do we want to deactivate the env? Are we done? If we made a mistake and it doesn't work, we have to activate it again. -->
 
-<!-- Response: Added reason above why we should deactivate the virtualenv when we are done developing the app. -->
+<!-- Response: Added reason above why we should deactivate the virtualenv when we have finished developing the app. -->
 
 Restart the `<^>myproject<^>` systemd service:
 
