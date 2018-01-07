@@ -75,7 +75,7 @@ First, activate the Python virtual environment by running:
 source <^>myprojectenv<^>/bin/activate
 ```
 
-To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Secrets such as the verification token should not be stored under version control. To achieve this, we use the `python-dotenv` package that exports the secrets as environment variables. Using `pip`, we install the `python-dotenv` package:
+To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Secrets such as the verification token should not be stored under version control. To achieve this, we use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package that exports the secrets as environment variables. Using `pip`, we install the `python-dotenv` package:
 <!-- TODO:  explain why we need this package. What will it do for us?  Also, link to its docs. -->
 
 <!-- Response: Edited paragraph above to discuss what the package does and link to package documentation. -->
