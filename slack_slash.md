@@ -242,6 +242,8 @@ We have now successfully created a Flask app that receives information from the 
 
 ## Conclusion
 
-In this tutorial, you implemented a Slack slash command by setting up a Flask app that is served by a uWSGI application server and a Nginx reverse proxy server. To encrypt the connection for the slash command, you should look into using HTTPS for the request URL. You can do so by [installing a free SSL certificate issued by Let's Encrypt on the Nginx server](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04).
+In this tutorial, you implemented a Slack slash command by setting up a Flask app that is served by a uWSGI application server and a Nginx reverse proxy server. To encrypt the connection for the slash command, you should look into using HTTPS for the request URL. You can do so by [installing a free SSL certificate issued by Let's Encrypt on the Nginx server](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04). Now that we have learned the basics of creating slash commands, you can implement any slash command that your team needs; some examples include retrieving data from databases or APIs and deploying code.
 
 <!-- TODO:  what else can we do with this setup? Give us more examples and ideas for further exploration. -->
+
+<!-- Response: I have added a sentence about some general ideas for what one can do with slash commands. -->
