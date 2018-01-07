@@ -61,6 +61,10 @@ We have now created and installed a Slack app in the development Slack workspace
 
 <!-- TODO:  Introduce this step. What are we doing? "When we issue commands in our Slack workspace, they'll be sent to our server. Let's write the code that handles those requests by using the Flask application you created in the ....."  -->
 
+<!-- Response: Added a quick introduction below to introduce this step. -->
+
+We will now create a Flask app that will handle the infomation sent by the slash command and return a response to Slack.
+
 After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, your Flask app resides in `~/<^>myproject<^>/` and this directory contains the following files and directory:
   - `<^>myproject<^>.ini`
   - `<^>myproject<^>.py`
