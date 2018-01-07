@@ -176,13 +176,15 @@ if __name__ == '__main__':
     app.run()
 ```
 
-After we have modified and saved `<^>myproject<^>.py`, deactivate the Python virtual environment:
+After we have modified and saved `<^>myproject<^>.py` and are convinced that we have finished developing the Flask app, deactivate the Python virtual environment so that future Python commands use the system Python interpreter:
 
 ```command
 deactivate
 ```
 
 <!-- TODO:  why do we want to deactivate the env? Are we done? If we made a mistake and it doesn't work, we have to activate it again. -->
+
+<!-- Response: Added reason above why we should deactivate the virtualenv when we are done developing the app. -->
 
 Restart the `<^>myproject<^>` systemd service:
 
