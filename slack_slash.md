@@ -144,9 +144,11 @@ We now create the Flask app that receives and processes the information sent by 
 nano <^>myproject<^>.py
 ```
 
-Modify `<^>myproject<^>.py` to respond to a Slack slash command by sending a text message that says "DigitalOcean Slack slash command is successful!":
+We add the following code to `<^>myproject<^>.py` so that the Flask app responds to the Slack slash command by sending a text message that says "DigitalOcean Slack slash command is successful!":
 
 <!-- TODO:  Can you clarify what's new here? You say modify the file, but do we add all this code? Or just parts of it?  -->
+
+<!-- Response: We should add all the code. Modified the sentence above to reflect this. -->
 
 ```python
 [label ~/myproject/myproject.py]
