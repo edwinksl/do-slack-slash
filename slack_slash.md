@@ -9,7 +9,6 @@ In Slack, slash commands are a quick and easy way to perform actions in the mess
 
 In this guide, you will set up a [Slack](https://slack.com/) slash command on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. This slash command can then be invoked from any Slack workspace in which you install the slash command as part of a Slack app. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
 
-
 ## Prerequisites
 
 To complete this tutorial, you will need:
