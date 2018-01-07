@@ -90,7 +90,9 @@ Using nano or your favorite text editor, create the `.env` file:
 nano .env
 ```
 
-Ensure that the `.env` file contains the following key-value pair: <!-- TODO:  be sure to explain what we are doing here and why. -->
+Place the verification token in the `.env` file by ensuring that the file contains the following key-value pair: <!-- TODO:  be sure to explain what we are doing here and why. -->
+
+<!-- Response: Edited sentence above to explain what is happening. -->
 
 ```
 [label ~/myproject/.env]
