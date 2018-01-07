@@ -111,7 +111,7 @@ nano <^>myproject<^>.ini
 
 Then, we modify `<^>myproject<^>.ini` to ensure that uWSGI automatically reloads when you `touch` or modify the Flask app in `<^>myproject<^>.py`: <!-- TODO:  why would we want to do this? Please explain. -->
 
-<!-- Response: Added justification in the paragraph above. -->
+<!-- Response: Added justification in two paragraphs above. -->
 
 ```python
 [label ~/myproject/myproject.ini]
