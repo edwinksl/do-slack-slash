@@ -71,7 +71,7 @@ After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubu
   - `wsgi.py`
   - `<^>myprojectenv<^>/`
 
-Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be private, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is private and not kept under version control, and then use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
+Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be kept secret, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is not kept under version control, and then use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
 
 First, activate the Python virtual environment by running:
 
