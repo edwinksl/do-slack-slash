@@ -1,17 +1,14 @@
-# How to Set Up Slack Slash Command on Ubuntu 16.04
+# How to Write a Slash Command with Flask and Python 3 on Ubuntu 16.04
 
 ### Introduction
-<!-- TODO:  Can you give an introduction to slash commands here? What are they and why would we want to build one? What kinds of things are they used for? Get us excited about this before we dive into the project. -->
+[Slack](https://slack.com/) is a communication platform for teams. Slack has numerous add-ons that let teams extend Slack, and integrate it with other programs. Slack [slash commands](https://api.slack.com/slash-commands) are a quick and easy way to perform actions in the message input box. For example, typing `/who` lists all users in the current channel. You can find a complete list of built-in slash commands at https://get.slack.help/hc/en-us/articles/201259356-Slash-commands. 
 
-<!-- Response: Added a quick introduction to slash commands below. -->
+You can create your own slash commands that members of your Slack workspace find useful. When you install the command to your workspace and invoke the command, you can direct Slack to make a request to a program you've written. This program receives the information from Slack and returns a response, which is displayed in Slack.  You can learn more about Slack slash commands by reading the [API documentation](https://api.slack.com/slash-commands).
 
-In [Slack](https://slack.com/), slash commands are a quick and easy way to perform actions in the message input box. For example, typing `/who` lists all users in the current channel. A complete list of built-in slash commands can be found at https://get.slack.help/hc/en-us/articles/201259356-Slash-commands. You will likely find that you need to add custom slash commands that members of your Slack workspace find useful, which is what we will cover in this tutorial.
+In this tutorial, you'll create a Slack slash command called `/slash`, powered by a [Flask](http://flask.pocoo.org/) app running on an Ubuntu 16.04 server and install this command to your Slack workspace. Once you're done,  typing `/slash` in the message input box will send information to the Flask app which will process the request and return a short message to Slack letting you know it worked.
 
-<!-- TODO:  can you give an overview of how this all works at a high level? You type `/slash` into Slack. The request goes from Slack to your server, where your Flask application processes the request and returns a response to Slack" or something? -->
+You'll serve this Flask app using a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and use  [Nginx](https://nginx.org/) as a reverse proxy. 
 
-<!-- Response: Edited the paragraph below to incorporate your suggestions. -->
-
-In this guide, you will set up a Slack slash command, which we will call `/slash`, on a Ubuntu 16.04 server using a [Flask](http://flask.pocoo.org/) app. This Flask app is served by a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and a [Nginx](https://nginx.org/) server that acts as a reverse proxy. By typing `/slash` in the message input box, the slash command can then be invoked from any Slack workspace in which you install the slash command as part of a Slack app. Invocation of the slash command sends information to the Flask app that processes the request and returns a response to Slack. For API documentation about Slack slash commands, visit https://api.slack.com/slash-commands.
 
 ## Prerequisites
 
@@ -19,59 +16,49 @@ To complete this tutorial, you will need:
 
 * One Ubuntu 16.04 server set up by following [the Ubuntu 16.04 initial server setup guide](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04), including a sudo non-root user and a firewall.
 * An existing Flask application served with uWSGI running behind Nginx. Complete the tutorial [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) to configure this on your server.
-* A development Slack workspace. If you don't have one, create one at https://slack.com/create.
+* A development Slack workspace with permission to install apps, If you don't have one, create one at https://slack.com/create.
 
-## Step 1 — Create and Install Slack App
+## Step 1 — Creating and Installing the Slack App
 
-We will first create a Slack app, which provides additional functionality to Slack, and install it in a development Slack workspace.  <!-- TODO:  explain what slack apps are? -->
+Before we write our code, we will first create a *Slack app*, which provides additional functionality to Slack, and install it in a development Slack workspace. Then we'll define the command and specify the URL that the command should request when we invoke the command.
 
-<!-- Response: Slightly edited the paragraph above to state what Slack apps are used for. -->
+To create a Slack app, visit https://api.slack.com/apps and click on the green **Create New App** button. In  the form that appears, enter the following details:
 
-To create a Slack app, visit https://api.slack.com/apps and click on the green **Create New App** button. Under **App Name**, we will use "DigitalOcean Slack slash command". Select the appropriate workspace under **Development Slack Workspace** and then click on the green **Create App** button. After the app is created, click on **Slash Commands** and then the **Create New Command** button. You should see the following page:
+* For **App Name**, enter `DigitalOcean Slack slash command`.
+* For **Development Slack Workspace**, select your development workspace.
 
-![Page for creating new command.](https://i.imgur.com/78vbP8z.png)
+Then click on the green **Create App** button. 
 
-For this tutorial, the Slack slash command that will be used is `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>server_domain_or_IP<^>/slash`. Therefore, we will fill in the following information:
+Once the app is created, click on **Slash Commands** and then click the **Create New Command** button. You'll  see the following page:
 
-- **Command**: `/slash`.
-- **Request URL**: `http://<^>server_domain_or_IP<^>/slash`.
-- **Short Description**: DigitalOcean Slack slash command.
+![Page for creating new command.](https://assets.digitalocean.com/articles/slack_slash_command_flask_1604/hPjGhZC.png)
 
-    <!-- TODO:  I don't think the screenshot is necessary. Slack may change the UI and changing text later is easier than screenshots.  -->
+For this tutorial, you'll create a command called `/slash`, which will send data via HTTP POST to a request URL that is `http://<^>server_domain_or_IP<^>/slash`. Therefor, fill in the following information:
 
-    <!-- Response: I feel that the screenshot is useful for people who prefer not to read through a chunk of text to fill out a form. -->
+- Fill in the  **Command** field with `/slash`.
+- For **Request URL**, enter `http://<^>your_server_ip_or_domain<^>/slash`.
+- For **Short Description**, enter `DigitalOcean Slack slash command`.
 
-The filled-in page now looks like:
+Then  on the green **Save** button to finish creating the slash command. 
 
-![Filled-in page for creating new command.](https://i.imgur.com/5NEcWb1.png)
+Now install the app to your workspace by clicking on the **Install App** link. Press the green **Install App to Workspace** button. Then press the green **Authorize** button.
 
-<$>[note]
-**Note**: Ignore the "This doesn't seem like a proper link. Sorry!" message in the screenshot; you will not see this message as you are using a valid domain name or IP address.
-<$>
+We have now created and installed a Slack app in the development Slack workspace., but the command won't work until we create a web app that processes the slash command. Before we can build the app, we need to configure our Python environment.
 
-Click on the green **Save** button to finish creating the slash command. Then install the app by clicking on **Install App**, followed by the green **Install App to Workspace** button and lastly the green **Authorize** button.
+## Step 2 — Configuring the Python Environment
 
-<!-- TODO:  Add a transition here. What are we going to do next? -->
 
-<!-- Response: Added a transition paragraph below. -->
-
-We have now created and installed a Slack app in the development Slack workspace. Next, we will create a Flask app that processes the slash command.
-
-## Step 2 — Create Flask App for Slack Slash Command
-
-<!-- TODO:  Introduce this step. What are we doing? "When we issue commands in our Slack workspace, they'll be sent to our server. Let's write the code that handles those requests by using the Flask application you created in the ....."  -->
-
-<!-- Response: Added a quick introduction below to introduce this step. -->
-
-We will now create a Flask app that will handle the information sent by the slash command and return a response to Slack.
-
-After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, your Flask app resides in `~/<^>myproject<^>/` and this directory contains the following files and directory:
+After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, you have a Flask app located in `~/<^>myproject<^>/`.  This directory contains the following files and directory:
   - `<^>myproject<^>.ini`
   - `<^>myproject<^>.py`
   - `wsgi.py`
   - `<^>myprojectenv<^>/`
 
-Our Flask app in `<^>myproject<^>.py` acts on the data sent by the Slack slash command and returns a JSON response. As stated in https://api.slack.com/slash-commands, we should validate the slash command using the verification token, which should be kept secret, provided by Slack. The verification token can be obtained by visiting https://api.slack.com/apps, clicking on our **DigitalOcean Slack slash command** app followed by **Basic Information**, and looking for **Verification Token**. We will save the verification token in a separate `.env` file that is not kept under version control, and then use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package to export the key-value pairs in `.env` as environment variables to be used in `<^>myproject<^>.py`.
+We'll modify the Flask app in `<^>myproject<^>.py` to act on the data sent by the Slack slash command and return a JSON response to Slack. 
+
+The [API documentation for commands](https://api.slack.com/slash-commands) states that we should validate the slash command using the verification token associated with the commnd, provided by Slack. 
+
+This verification token should be kept secret, so we'll save it in a new file called `.env` file that is not kept under version control. We'll use the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package to export the key-value pairs in `.env` as environment variables, and we'll access those environment variables in `<^>myproject<^>.py`.
 
 First, activate the Python virtual environment by running:
 
@@ -80,90 +67,91 @@ source <^>myprojectenv<^>/bin/activate
 ```
 
 To confirm that the virtualenv is activated, you should see `(<^>myprojectenv<^>)` on the left-hand side of the Bash prompt. Secrets such as the verification token should not be stored under version control. To achieve this, we use the `python-dotenv` package that exports the secrets as environment variables. Using `pip`, we install the `python-dotenv` package:
-<!-- TODO:  explain why we need this package. What will it do for us?  Also, link to its docs. -->
 
-<!-- Response: Edited paragraph above to discuss what the package does. Also linked to package documentation three paragraphs above. -->
-
-```command
+```custom_prefix((myprojectenv)\s$)
 pip install python-dotenv
 ```
 
 Using nano or your favorite text editor, create the `.env` file:
 
-```command
+```custom_prefix((myprojectenv)\s$)
 nano .env
 ```
 
-Place the verification token in the `.env` file by ensuring that the file contains the following key-value pair: <!-- TODO:  be sure to explain what we are doing here and why. -->
+Get the verification token by visiting https://api.slack.com/apps. Click on the **DigitalOcean Slack slash command** app then click on **Basic Information**. Then find  **Verification Token**.
 
-<!-- Response: Edited sentence above to explain what is happening. -->
+![The verification token](https://assets.digitalocean.com/articles/slack_slash_command_flask_1604/ANexGpq.png)
+
+Copy the value for the token and place it in the `.env` file, assigning the value to an environment variable called `VERIFICATION_TOKEN`:
 
 ```
 [label ~/myproject/.env]
 VERIFICATION_TOKEN=<^>your_verification_token<^>
 ```
 
-<!-- TODO:  before we open this file, let us know what we're going to do.  -->
+Save the file and exit the editor.
 
-<!-- Response: Added purpose of opening the file in the paragraph below. -->
+When you're developing a Flask app,  you'll want the uWSGI server to reload automatically when you make changes to the app. To do this, first open `<^>myproject<^>.ini` in your editor:
 
-During the development of a Flask app, it is sometimes convenient for the uWSGI server to reload automatically when we make changes to the app. To do this, first open `<^>myproject<^>.ini` in your editor:
-
-```command
+```custom_prefix((myprojectenv)\s$)
 nano <^>myproject<^>.ini
 ```
 
-Then, we modify `<^>myproject<^>.ini` to ensure that uWSGI automatically reloads when you `touch` or modify the Flask app in `<^>myproject<^>.py`: <!-- TODO:  why would we want to do this? Please explain. -->
-
-<!-- Response: Added justification in two paragraphs above. -->
+Add this line to the end of the file to ensure that uWSGI automatically reloads when you `touch` or modify the Flask app in `<^>myproject<^>.py`
 
 ```python
 [label ~/myproject/myproject.ini]
-[uwsgi]
-module = wsgi:app
-
-master = true
-processes = 5
-
-socket = myproject.sock
-chmod-socket = 660
-vacuum = true
-
-die-on-term = true
+...
 
 touch-reload = <^>myproject<^>.py
 ```
 
-<!-- TODO:  same here. What are we about to do? -->
+Save the file and exit the editor.
 
-<!-- Response: Mention the purpose of this step in the paragraph below. -->
 
-We now create the Flask app that receives and processes the information sent by the slash command and returns an appropriate response to Slack. We first open `<^>myproject<^>.py`:
+Now we'll create the Flask app that receives and processes the information sent by the slash command and returns an appropriate response to Slack.
 
-```command
+## Step 3 – Creating the Flask App
+
+When we invoke the `/slash` command in Slack, Slack will make a request to our server. We configured the command to hit the url `/slash`, so we'll alter the Flask app we created to respond to that endpoint.
+
+Open `<^>myproject<^>.py` in your editor:
+
+```custom_prefix((myprojectenv)\s$)
 nano <^>myproject<^>.py
 ```
 
-We add all of the following code to `<^>myproject<^>.py` so that the Flask app responds to the Slack slash command by sending a text message that says "DigitalOcean Slack slash command is successful!":
+Remove the contents of the file. We'll create a new app from scratch.
 
-<!-- TODO:  Can you clarify what's new here? You say modify the file, but do we add all this code? Or just parts of it?  -->
-
-<!-- Response: We should add all the code. Modified the sentence above to reflect this. -->
+Add this code which imports Flask and loads additional modules for handling JSON data and making web requests:
 
 ```python
 [label ~/myproject/myproject.py]
 #!/usr/bin/env python
 
-import dotenv
-import os
 from flask import Flask, jsonify, request
+```
 
-app = Flask(__name__)
+Then add this code which loads  the `dotenv` module. reads the contents of the `.env` file you created. loads its contents into environment variables, and then fetches the verification token from the environment, storing it in the variable `verification_token`:
+
+```python
+[label ~/myproject/myproject.py]
+...
+import os
+import dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv(dotenv_path)
 verification_token = os.environ['VERIFICATION_TOKEN']
+```
 
+Now add this code to configure the Flask app to respond to the Slack slash command by sending a text response that says "DigitalOcean Slack slash command is successful!":
+
+```python
+[label ~/myproject/myproject.py]
+...
+
+app = Flask(__name__)
 
 @app.route('/slash', methods=['POST'])
 def slash():
@@ -176,36 +164,32 @@ if __name__ == '__main__':
     app.run()
 ```
 
-After we have modified and saved `<^>myproject<^>.py` and are convinced that we have finished developing the Flask app, deactivate the Python virtual environment so that future Python commands use the system Python interpreter:
 
-```command
-deactivate
-```
+Save the file and exit the editor. 
 
-<!-- TODO:  why do we want to deactivate the env? Are we done? If we made a mistake and it doesn't work, we have to activate it again. -->
+Restart the `<^>myproject<^>` systemd service to ensure the latest version of your code is running:
 
-<!-- Response: Added reason above why we should deactivate the virtualenv when we have finished developing the app. -->
-
-Restart the `<^>myproject<^>` systemd service:
-
-```command
+```custom_prefix((myprojectenv)\s$)
 sudo systemctl restart myproject
 ```
 
-<!-- TODO:  this is a fantastic example of telling us what we're doing before we do it. This is what I was looking for in the other spots.  -->
-Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change `location` in `/etc/nginx/sites-available/<^>myproject<^>` from `/` to `/slash`. We first open `/etc/nginx/sites-available/<^>myproject<^>`:
+Now let's modify the Nginx configuration to support our slash command.
 
-```command
+## Step 4 – Configuring Nginx to Serve the Command
+
+Because our request URL is `http://<^>server_domain_or_IP<^>/slash`, we need to change the `location` value in our Nginx server block from `/` to `/slash`. 
+
+Open the file  `/etc/nginx/sites-available/<^>myproject<^>` in your editor:
+
+```custom_prefix((myprojectenv)\s$)
 sudo nano /etc/nginx/sites-available/<^>myproject<^>
 ```
 
-Ensure that `location` is changed to `/slash` in `/etc/nginx/sites-available/<^>myproject<^>`:
+Change the value for `location` from `/` to  `/slash` :
 
 ```nginx
 [label /etc/nginx/sites-available/myproject]
-server {
-    listen 80;
-    server_name <^>server_domain_or_IP<^>;
+...
 
     location <^>/slash<^> {
         include uwsgi_params;
@@ -214,36 +198,41 @@ server {
 }
 ```
 
-After making this change, check the Nginx configuration file for syntax errors:
+Save the file and exit the editor.
 
-```command
+Then check the Nginx configuration file for syntax errors:
+
+```custom_prefix((myprojectenv)\s$)
 sudo nginx -t
 ```
 
 If there are no syntax errors with the Nginx configuration file, restart the Nginx service:
 
-```command
+```custom_prefix((myprojectenv)\s$)
 sudo systemctl restart nginx
 ```
 
-<!-- TODO:  transition. What have we done so far, what's next? -->
-
-<!-- Response: Added a transition sentence at this end of this step -->
 
 Visit your development Slack workspace and type `/slash` in any channel. You should see the following response:
 
-![Slack slash command is successful!](https://i.imgur.com/TiHgJer.png)
+![Slack slash command is successful!](https://assets.digitalocean.com/articles/slack_slash_command_flask_1604/TiHgJer.png)
 
-<!-- TODO:  Is there more we can do in this tutorial to make this more useful? Maybe do something with a value that comes in? Because this step is so short, it could be combined with the previous step, which then makes this only a two-step tutorial.  It would be great if we could expand this just a little more. -->
+If you receive a message stating that the command failed, double-check the code in `myproject.py` for any syntax errors or issues. Then try again.
 
-<!-- Response: I have merged steps 2 and 3. -->
+Finally, once you're done developing your command, deactivate the Python virtual environment so that future Python commands use the system Python interpreter:
 
-We have now successfully created a Flask app that receives information from the `/slash` slash command and returns a response to Slack, which is a text message that says "DigitalOcean Slack slash command is successful!".
+```custom_prefix((myprojectenv)\s$)
+deactivate
+```
+
+You have now successfully created a Flask app that receives information from the `/slash` slash command and returns a response to Slack.
+
+<$>[note]
+To ensure the communication between your server and Slack is secure, encrypt the connection for the slash command using HTTPS for the request URL. You can do so by [installing a free SSL certificate issued by Let's Encrypt on the Nginx server](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04). When you're done, be sure to modify the URL for your Slack app and change `http://` to `https://`.
+<$>
 
 ## Conclusion
 
-In this tutorial, you implemented a Slack slash command by setting up a Flask app that is served by a uWSGI application server and a Nginx reverse proxy server. To encrypt the connection for the slash command, you should look into using HTTPS for the request URL. You can do so by [installing a free SSL certificate issued by Let's Encrypt on the Nginx server](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04). Now that we have learned the basics of creating slash commands, you can implement any slash command that your team needs; some examples include retrieving data from databases or APIs and deploying code.
+In this tutorial, you implemented a Slack slash command by setting up a Flask app that is served by a uWSGI application server and a Nginx reverse proxy server. 
 
-<!-- TODO:  what else can we do with this setup? Give us more examples and ideas for further exploration. -->
-
-<!-- Response: I have added a sentence above about some general ideas for what one can do with slash commands. -->
+Now that you know the basics of creating slash commands, you can implement any slash command that your team needs. You could create commands that retrieve data from databases, interact with other APIs , or even create commands for deploying code.
