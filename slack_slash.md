@@ -1,6 +1,7 @@
 # How to Write a Slash Command with Flask and Python 3 on Ubuntu 16.04
 
 ### Introduction
+
 [Slack](https://slack.com/) is a communication platform for teams. Slack has numerous add-ons that let teams extend Slack, and integrate it with other programs. Slack [slash commands](https://api.slack.com/slash-commands) are a quick and easy way to perform actions in the message input box. For example, typing `/who` lists all users in the current channel. You can find a complete list of built-in slash commands at https://get.slack.help/hc/en-us/articles/201259356-Slash-commands.
 
 You can create your own slash commands that members of your Slack workspace find useful. When you install the command to your workspace and invoke the command, you can direct Slack to make a request to a program you've written. This program receives the information from Slack and returns a response, which is displayed in Slack.  You can learn more about Slack slash commands by reading the [API documentation](https://api.slack.com/slash-commands).
@@ -8,7 +9,6 @@ You can create your own slash commands that members of your Slack workspace find
 In this tutorial, you'll create a Slack slash command called `/slash`, powered by a [Flask](http://flask.pocoo.org/) app running on an Ubuntu 16.04 server and install this command to your Slack workspace. Once you're done,  typing `/slash` in the message input box will send information to the Flask app which will process the request and return a short message to Slack letting you know it worked.
 
 You'll serve this Flask app using a [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) application server and use  [Nginx](https://nginx.org/) as a reverse proxy.
-
 
 ## Prerequisites
 
@@ -46,7 +46,6 @@ Now install the app to your workspace by clicking on the **Install App** link. P
 We have now created and installed a Slack app in the development Slack workspace., but the command won't work until we create a web app that processes the slash command. Before we can build the app, we need to configure our Python environment.
 
 ## Step 2 — Configuring the Python Environment
-
 
 After finishing the [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04) tutorial, you have a Flask app located in `~/<^>myproject<^>/`.  This directory contains the following files and directory:
   - `<^>myproject<^>.ini`
@@ -108,7 +107,6 @@ touch-reload = <^>myproject<^>.py
 
 Save the file and exit the editor.
 
-
 Now we'll create the Flask app that receives and processes the information sent by the slash command and returns an appropriate response to Slack.
 
 ## Step 3 – Creating the Flask App
@@ -164,7 +162,6 @@ if __name__ == '__main__':
     app.run()
 ```
 
-
 Save the file and exit the editor.
 
 Restart the `<^>myproject<^>` systemd service to ensure the latest version of your code is running:
@@ -211,7 +208,6 @@ If there are no syntax errors with the Nginx configuration file, restart the Ngi
 ```custom_prefix((myprojectenv)\s$)
 sudo systemctl restart nginx
 ```
-
 
 Visit your development Slack workspace and type `/slash` in any channel. You should see the following response:
 
